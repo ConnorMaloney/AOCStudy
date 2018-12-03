@@ -86,6 +86,7 @@ start = timeit.default_timer()
 
 pos = 0
 part2ans = 0
+# freqArr = [] 
 freqArr = {0}
 # This loops over the answer array in a circular manner
 print("Calculating frequencies...")
@@ -104,6 +105,7 @@ for i in range(10000000):
 
         else:
             freqArr.add(part2ans) # Append frequency to array
+            # freqArr.append(part2ans)
             pos = pos + 1 # Iterate
 
 
