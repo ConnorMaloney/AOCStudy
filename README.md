@@ -5,4 +5,4 @@ Read more here:
 https://adventofcode.com/2018
 
 # Off-season: 
-During off-season I will be contributing sandbox/study code for personal use or Udemy courses
+During off-season I will be contributing sandbox/study code for personal use or Udemy courses, as well as any future improvements I find.
