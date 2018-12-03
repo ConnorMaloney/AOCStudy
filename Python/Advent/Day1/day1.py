@@ -1,5 +1,8 @@
 # Day 1 of Advent Calendar code problem - Part 1
 
+# Imported sys for fancy printing on same line with carriage return
+import sys, timeit
+
 file = open("in.txt","r")
 strArr = file.readlines()
 newArr = []
@@ -16,7 +19,7 @@ answer = 0
 for y in range(len(newArr)):
     answer = answer + int(newArr[y])
     ansArr.append(answer)
-# 592 - print(answer)
+print("Part 1 Answer:", answer)
 
 ''' Part 1 finished. 592 is the result of all the frequency changes '''
 
@@ -70,26 +73,37 @@ while True:
 # Since were only checking for the FIRST duplicate, I don't need to use a set.
 # I can just store every single frequency, and then compare if an old frequency is equal to the new result.
 
+# EDIT: HOWEVER PART OF ME BELIEVES THIS WILL BE HUGELY INEFFICIENT. Maybe a set would be better...
 
-#print(newArr)
+# Oh my god. Set is SO unbelievably faster...
+
+# Runtime with freqArr as list: 97.3010035820007
+# Runtime with freqArr as set: 0.5675921249985549
+
+# Wow, feel like such a brainlet. Should have remembered algorithms class and their complexity. 
+# I need 2lrnhow2Bigo
+start = timeit.default_timer()
+
 pos = 0
 part2ans = 0
-freqArr = []
+freqArr = {0}
 # This loops over the answer array in a circular manner
+print("Calculating frequencies...")
 for i in range(10000000):
     if pos == len(newArr):
         pos = 0 # Loop back to beginning of calculations
     else:
+        sys.stdout.write('\r>> %i' % part2ans)
+        sys.stdout.flush()
         part2ans = part2ans + int(newArr[pos]) # Calculate frequency
 
         # If duplicate is found
         if part2ans in freqArr:
-            print("Frequency has appeared twice!")
-            print(part2ans)
+            print("\nFrequency %i has appeared twice." % part2ans)
             break
 
         else:
-            freqArr.append(part2ans) # Append frequency to array
+            freqArr.add(part2ans) # Append frequency to array
             pos = pos + 1 # Iterate
 
 
@@ -98,6 +112,10 @@ for i in range(10000000):
 #print(freqArrDuplicates)
 
 # 241 BAAABYYYYY
+print("Part 2 answer:", part2ans)
+stop = timeit.default_timer()
+
+print('Time: ', stop - start)
 
 '''
 #Test code, this algorithm seems to work for the practice examples of part2
