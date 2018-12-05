@@ -6,12 +6,34 @@ str_arr = file.readlines()
 claim_arr = []
 
 # Creates 2D patch array initialized with dots
-patch_arr = [['.' for x in range(1000)] for y in range(1000)]
+#patch_arr = [['.' for x in range(1000)] for y in range(1000)]
 # Grabs file lines and puts them into list, removes newline characters
 for x in range(len(str_arr)):
     y = str_arr[x].replace('\n', '')
     claim_arr.append(y)
+
+#print(claim_arr)
     
+
+# HOW THE HELL AM I SUPPOESD TO DO PART 2 LOL
+
+# I'll need to use classes.
+
+class Patch:
+    def __init__(self, patch_id, coords, size):
+        self.patch_id = patch_id
+        self.coords = coords
+        self.size = size
+
+#patch1 = Patch(1, [[1,2], [2,4] ,[5,6]])
+
+#print(patch1.patch_id)
+
+
+
+'''
+
+PART 1
 
 # Whole piece of frabic is atleast 1000x1000 inches.
 # Each elf makes a claim of which area of said fabric is best.
@@ -20,6 +42,7 @@ for x in range(len(str_arr)):
 # Problem: Some claims overlap.
 
 # claimIDArr = [] # I don't know if claim ID's will be necessary
+
 
 # Pretty print patch array
 def printPatchArr(my_arr):
@@ -40,12 +63,12 @@ def countCollisions(my_arr):
                 num_collisions = num_collisions + 1
     print("\n" + str(num_collisions) + " COLLISIONS FOUND\n")
 
-'''TESTING'''
-#test_patch_arr = [['.' for x in range(10)] for y in range(10)]
-#test_claim_arr = ['#1 @ 1,3: 4x4', '#2 @ 3,1: 4x4', '#3 @ 5,5: 2x2', '#4 @ 5,5: 2x2', '#5 @ 5,5: 2x2']
+
+test_patch_arr = [['.' for x in range(10)] for y in range(10)]
+test_claim_arr = ['#1 @ 1,3: 4x4', '#2 @ 3,1: 4x4', '#3 @ 5,5: 2x2']
 # Take in claim data and spit out useful data (coords of patch and size of patch)
-for i in range(len(claim_arr)):
-    data = claim_arr[i].split()
+for i in range(len(test_claim_arr)):
+    data = test_claim_arr[i].split()
 
     # Remove first claim ID and @ symbols from array
     del data[0]
@@ -62,22 +85,14 @@ for i in range(len(claim_arr)):
     # . indicates empty, X indicates taken, ! indicates collision
     for x in range(x_coord_data, x_coord_data + x_length):
         for y in range(y_coord_data, y_coord_data + y_height):
-            if patch_arr[x][y] == '.':
-                patch_arr[x][y] = 'X'
-            elif patch_arr[x][y] == 'X':
-                patch_arr[x][y] = '!'
+            if test_patch_arr[x][y] == '.':
+                test_patch_arr[x][y] = 'X'
+            elif test_patch_arr[x][y] == 'X':
+                test_patch_arr[x][y] = '!'
     
-printPatchArr(patch_arr)
-countCollisions(patch_arr)
-
-
-    #print(data)
-
-# Create empty 2D Array
-#myArr = [[0 for x in range(1000)] for y in range(1000)]
-#print(myArr)
-
-
+printPatchArr(test_patch_arr)
+countCollisions(test_patch_arr) # GOT IT, Answer was 120419
+'''
 
     
 
