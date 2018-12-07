@@ -1,6 +1,7 @@
 # Day 3 of Advent Calendar code problem - Part 1
 
 import sys
+from pprint import pprint
 file = open("in.txt","r")
 str_arr = file.readlines()
 claim_arr = []
@@ -14,7 +15,7 @@ for x in range(len(str_arr)):
 
 #print(claim_arr)
     
-'''
+
 # HOW THE HELL AM I SUPPOESD TO DO PART 2 LOL
 
 # I'll need to use classes.
@@ -25,16 +26,15 @@ class Patch:
         self.coords = coords
         self.size = size
 
-#patch1 = Patch(1, [[1,2], [2,4] ,[5,6]])
+patch1 = Patch(1, [[1,2], [2,4] ,[5,6]], [4,3])
 
-#print(patch1.patch_id)
-'''
+pprint(vars(patch1))
 
 
 
 #PART 1
 
-# Whole piece of frabic is atleast 1000x1000 inches.
+# Whole piece of fabric is atleast 1000x1000 inches.
 # Each elf makes a claim of which area of said fabric is best.
 # Claims have an ID, specify area of rectangle. 
 # ClaimID: @ 3 inches (x coor), 2 inches (y coor). 5 wide and 4 tall.
@@ -122,8 +122,9 @@ def run():
     printPatchArr(patch_arr)
     countCollisions(patch_arr) # GOT IT, Answer was 120419
 
+
 #runTest()
-run()
+#run()
 
 
     
