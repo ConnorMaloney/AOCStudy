@@ -14,7 +14,7 @@ for x in range(len(str_arr)):
 
 #print(claim_arr)
     
-
+'''
 # HOW THE HELL AM I SUPPOESD TO DO PART 2 LOL
 
 # I'll need to use classes.
@@ -28,12 +28,11 @@ class Patch:
 #patch1 = Patch(1, [[1,2], [2,4] ,[5,6]])
 
 #print(patch1.patch_id)
-
-
-
 '''
 
-PART 1
+
+
+#PART 1
 
 # Whole piece of frabic is atleast 1000x1000 inches.
 # Each elf makes a claim of which area of said fabric is best.
@@ -63,36 +62,69 @@ def countCollisions(my_arr):
                 num_collisions = num_collisions + 1
     print("\n" + str(num_collisions) + " COLLISIONS FOUND\n")
 
+def runTest():
+    test_patch_arr = [['.' for x in range(10)] for y in range(10)]
+    test_claim_arr = ['#1 @ 1,3: 4x4', '#2 @ 3,1: 4x4', '#3 @ 5,5: 2x2']
+    # Take in claim data and spit out useful data (coords of patch and size of patch)
+    for i in range(len(test_claim_arr)):
+        data = test_claim_arr[i].split()
 
-test_patch_arr = [['.' for x in range(10)] for y in range(10)]
-test_claim_arr = ['#1 @ 1,3: 4x4', '#2 @ 3,1: 4x4', '#3 @ 5,5: 2x2']
-# Take in claim data and spit out useful data (coords of patch and size of patch)
-for i in range(len(test_claim_arr)):
-    data = test_claim_arr[i].split()
+        # Remove first claim ID and @ symbols from array
+        del data[0]
+        del data[0]
+        #print(data)
 
-    # Remove first claim ID and @ symbols from array
-    del data[0]
-    del data[0]
-    #print(data)
+        # Grab coord and dimension data
+        x_coord_data = int((data[0].split(','))[0])
+        y_coord_data = int((data[0].split(','))[1].rstrip(':'))
+        x_length = int(data[1].split('x')[0])
+        y_height = int(data[1].split('x')[1])
 
-    # Grab coord and dimension data
-    x_coord_data = int((data[0].split(','))[0])
-    y_coord_data = int((data[0].split(','))[1].rstrip(':'))
-    x_length = int(data[1].split('x')[0])
-    y_height = int(data[1].split('x')[1])
+        # This plots where the elves want to cut.
+        # . indicates empty, X indicates taken, ! indicates collision
+        for x in range(x_coord_data, x_coord_data + x_length):
+            for y in range(y_coord_data, y_coord_data + y_height):
+                if test_patch_arr[x][y] == '.':
+                    test_patch_arr[x][y] = 'X'
+                elif test_patch_arr[x][y] == 'X':
+                    test_patch_arr[x][y] = '!'
+        
+    printPatchArr(test_patch_arr)
+    countCollisions(test_patch_arr) # GOT IT, Answer was 120419
 
-    # This plots where the elves want to cut.
-    # . indicates empty, X indicates taken, ! indicates collision
-    for x in range(x_coord_data, x_coord_data + x_length):
-        for y in range(y_coord_data, y_coord_data + y_height):
-            if test_patch_arr[x][y] == '.':
-                test_patch_arr[x][y] = 'X'
-            elif test_patch_arr[x][y] == 'X':
-                test_patch_arr[x][y] = '!'
-    
-printPatchArr(test_patch_arr)
-countCollisions(test_patch_arr) # GOT IT, Answer was 120419
-'''
+def run():
+    patch_arr = [['.' for x in range(1000)] for y in range(1000)]
+    #test_claim_arr = ['#1 @ 1,3: 4x4', '#2 @ 3,1: 4x4', '#3 @ 5,5: 2x2']
+    # Take in claim data and spit out useful data (coords of patch and size of patch)
+    for i in range(len(claim_arr)):
+        data = claim_arr[i].split()
+
+        # Remove first claim ID and @ symbols from array
+        del data[0]
+        del data[0]
+        #print(data)
+
+        # Grab coord and dimension data
+        x_coord_data = int((data[0].split(','))[0])
+        y_coord_data = int((data[0].split(','))[1].rstrip(':'))
+        x_length = int(data[1].split('x')[0])
+        y_height = int(data[1].split('x')[1])
+
+        # This plots where the elves want to cut.
+        # . indicates empty, X indicates taken, ! indicates collision
+        for x in range(x_coord_data, x_coord_data + x_length):
+            for y in range(y_coord_data, y_coord_data + y_height):
+                if patch_arr[x][y] == '.':
+                    patch_arr[x][y] = 'X'
+                elif patch_arr[x][y] == 'X':
+                    patch_arr[x][y] = '!'
+        
+    printPatchArr(patch_arr)
+    countCollisions(patch_arr) # GOT IT, Answer was 120419
+
+#runTest()
+run()
+
 
     
 
