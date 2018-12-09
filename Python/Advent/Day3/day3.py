@@ -42,12 +42,11 @@ for i in range(len(test_claim_arr)):
     y_coord_data = int((data[0].split(','))[1].rstrip(':'))
     x_length = int(data[1].split('x')[0])
     y_height = int(data[1].split('x')[1])
-    #print(x_coord_data, y_coord_data, x_length, y_height)
 
     squares_taken = [] # Define list to show all square coords taken by patch
 
-    for x in range(x_coord_data, x_length+1):
-        for y in range(y_coord_data, y_height+y_height-1):
+    for x in range(x_coord_data, (x_coord_data + x_length)):
+        for y in range(y_coord_data, (y_coord_data + y_height)):
             square = [x, y]
             squares_taken.append(square)
 
@@ -55,7 +54,10 @@ for i in range(len(test_claim_arr)):
     square_arr.append(squarePatch)
 
 
-pprint(vars(square_arr[0]))
+#pprint(vars(square_arr[0]))
+for i in range(len(square_arr)):
+    print(square_arr[i].squares_taken)
+
     
 
 
