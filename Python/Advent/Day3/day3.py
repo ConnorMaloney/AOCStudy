@@ -33,7 +33,7 @@ for i in range(len(test_claim_arr)):
 
     id = data[0] # Grab patch id
     del data[1] # Remove @ symbol
-    print(data)
+
     del data[0]
 
     # Grab coord and dimension data
@@ -47,7 +47,7 @@ for i in range(len(test_claim_arr)):
 
     for x in range(x_coord_data, (x_coord_data + x_length)):
         for y in range(y_coord_data, (y_coord_data + y_height)):
-            square = [x, y]
+            square = float(str(x) + '.' + str(y))
             squares_taken.append(square)
 
     squarePatch = Patch(id, squares_taken)
@@ -56,7 +56,19 @@ for i in range(len(test_claim_arr)):
 
 #pprint(vars(square_arr[0]))
 for i in range(len(square_arr)):
-    print(square_arr[i].squares_taken)
+    print(vars(square_arr[i]))
+
+#set_squares = set(square_arr)
+#print(', '.join(set_squares))
+'''
+for i in range(len(square_arr)):
+    for j in range(len(square_arr)):
+        for k in range(len(square_arr[j].squares_taken)):
+            #print(square_arr[j].squares_taken[k])
+            if (square_arr[j].squares_taken[k] in square_arr[i].squares_taken):
+                print("found")
+            '''
+
 
     
 
