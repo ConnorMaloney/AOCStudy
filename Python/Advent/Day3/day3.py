@@ -19,19 +19,48 @@ for x in range(len(str_arr)):
 # HOW THE HELL AM I SUPPOESD TO DO PART 2 LOL
 
 # I'll need to use classes.
+test_patch_arr = [['.' for x in range(10)] for y in range(10)]
+test_claim_arr = ['#1 @ 1,3: 4x4', '#2 @ 3,1: 4x4', '#3 @ 5,5: 2x2']
+square_arr = [] # This array will store all square patch objects
 
 class Patch:
-    def __init__(self, patch_id, coords, size):
+    def __init__(self, patch_id, squares_taken):
         self.patch_id = patch_id
-        self.coords = coords
-        self.size = size
+        self.squares_taken = squares_taken
+# Take in claim data and spit out useful data (id coord, coords of patch and size of patch)
+for i in range(len(test_claim_arr)):
+    data = test_claim_arr[i].split()
 
-patch1 = Patch(1, [[1,2], [2,4] ,[5,6]], [4,3])
+    id = data[0] # Grab patch id
+    del data[1] # Remove @ symbol
+    print(data)
+    del data[0]
 
-pprint(vars(patch1))
+    # Grab coord and dimension data
+    
+    x_coord_data = int((data[0].split(','))[0])
+    y_coord_data = int((data[0].split(','))[1].rstrip(':'))
+    x_length = int(data[1].split('x')[0])
+    y_height = int(data[1].split('x')[1])
+    #print(x_coord_data, y_coord_data, x_length, y_height)
+
+    squares_taken = [] # Define list to show all square coords taken by patch
+
+    for x in range(x_coord_data, x_length+1):
+        for y in range(y_coord_data, y_height+y_height-1):
+            square = [x, y]
+            squares_taken.append(square)
+
+    squarePatch = Patch(id, squares_taken)
+    square_arr.append(squarePatch)
+
+
+pprint(vars(square_arr[0]))
+    
 
 
 
+'''
 #PART 1
 
 # Whole piece of fabric is atleast 1000x1000 inches.
@@ -126,7 +155,7 @@ def run():
 #runTest()
 #run()
 
-
+'''
     
 
 
