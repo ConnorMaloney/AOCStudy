@@ -55,8 +55,14 @@ for i in range(len(test_claim_arr)):
 
 
 #pprint(vars(square_arr[0]))
+
 for i in range(len(square_arr)):
-    print(vars(square_arr[i]))
+    checkSquare = square_arr[i]
+    print(vars(checkSquare))
+    for j in range(len(checkSquare.squares_taken)):
+        checkCoord = checkSquare.squares_taken[j]
+        print(checkCoord)
+    
 
 #set_squares = set(square_arr)
 #print(', '.join(set_squares))
