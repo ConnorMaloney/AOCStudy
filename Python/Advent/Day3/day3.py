@@ -24,9 +24,10 @@ test_claim_arr = ['#1 @ 1,3: 4x4', '#2 @ 3,1: 4x4', '#3 @ 5,5: 2x2']
 square_arr = [] # This array will store all square patch objects
 
 class Patch:
-    def __init__(self, patch_id, squares_taken):
+    def __init__(self, patch_id, squares_taken, has_similar):
         self.patch_id = patch_id
         self.squares_taken = squares_taken
+        self.has_similar = has_similar
 # Take in claim data and spit out useful data (id coord, coords of patch and size of patch)
 for i in range(len(test_claim_arr)):
     data = test_claim_arr[i].split()
@@ -50,37 +51,50 @@ for i in range(len(test_claim_arr)):
             square = float(str(x) + '.' + str(y))
             squares_taken.append(square)
 
-    squarePatch = Patch(id, squares_taken)
+    squarePatch = Patch(id, squares_taken, False)
     square_arr.append(squarePatch)
 
 
-#pprint(vars(square_arr[0]))
+#pprint(vars(square_arr[0])) Optional pretty print
 
 for i in range(len(square_arr)):
     checkSquare = square_arr[i]
-    print(vars(checkSquare))
     for j in range(len(checkSquare.squares_taken)):
+        # take this coord and check it through entire array
         checkCoord = checkSquare.squares_taken[j]
-        print(checkCoord)
+        # iterate and set flags
+        for k in range(len(square_arr)):
+            # only check patch id's that are different
+            if checkSquare.patch_id != square_arr[k].patch_id:
+                if checkCoord in square_arr[k].squares_taken:
+                    #print(checkSquare.patch_id, checkCoord, square_arr[k].patch_id, "yup") 
+                    checkSquare.has_similar = True
+                    square_arr[k].has_similar = True
+            
+
+for l in range(len(square_arr)):
+    if square_arr[l].has_similar == False:
+        print("WINNER: ", square_arr[l].patch_id)
+
+                    #print(checkCoord)
+            #if checkCoord not in square_arr[k].squares_taken:
+             #   print("nope")
     
 
 #set_squares = set(square_arr)
 #print(', '.join(set_squares))
-'''
+
 for i in range(len(square_arr)):
     for j in range(len(square_arr)):
         for k in range(len(square_arr[j].squares_taken)):
             #print(square_arr[j].squares_taken[k])
             if (square_arr[j].squares_taken[k] in square_arr[i].squares_taken):
                 print("found")
-            '''
-
-
-    
-
-
-
+                
 '''
+
+
+
 #PART 1
 
 # Whole piece of fabric is atleast 1000x1000 inches.
