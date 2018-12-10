@@ -13,14 +13,11 @@ for x in range(len(str_arr)):
     y = str_arr[x].replace('\n', '')
     claim_arr.append(y)
 
-#print(claim_arr)
-    
-
 # HOW THE HELL AM I SUPPOESD TO DO PART 2 LOL
 
 # I'll need to use classes.
-test_patch_arr = [['.' for x in range(10)] for y in range(10)]
-test_claim_arr = ['#1 @ 1,3: 4x4', '#2 @ 3,1: 4x4', '#3 @ 5,5: 2x2']
+test_patch_arr = [['.' for x in range(15)] for y in range(15)]
+#test_claim_arr = ['#1 @ 1,3: 4x4', '#2 @ 3,1: 4x4', '#3 @ 5,5: 2x2', '#4 @ 2,2: 2x2', '#5 @ 3,5: 2x2', '#6 @ 7,5: 2x2']
 square_arr = [] # This array will store all square patch objects
 
 class Patch:
@@ -29,8 +26,8 @@ class Patch:
         self.squares_taken = squares_taken
         self.has_similar = has_similar
 # Take in claim data and spit out useful data (id coord, coords of patch and size of patch)
-for i in range(len(test_claim_arr)):
-    data = test_claim_arr[i].split()
+for i in range(len(claim_arr)):
+    data = claim_arr[i].split()
 
     id = data[0] # Grab patch id
     del data[1] # Remove @ symbol
@@ -68,28 +65,31 @@ for i in range(len(square_arr)):
             if checkSquare.patch_id != square_arr[k].patch_id:
                 if checkCoord in square_arr[k].squares_taken:
                     #print(checkSquare.patch_id, checkCoord, square_arr[k].patch_id, "yup") 
+                    #print(type(checkCoord))
+                    sys.stdout.write('\r>> %s %f %s' % (checkSquare.patch_id, checkCoord, square_arr[k].patch_id))
+                    sys.stdout.flush()
+    
+                    # set patch flags
                     checkSquare.has_similar = True
                     square_arr[k].has_similar = True
             
 
 for l in range(len(square_arr)):
+    #print(square_arr[l].has_similar)
     if square_arr[l].has_similar == False:
         print("WINNER: ", square_arr[l].patch_id)
-
-                    #print(checkCoord)
-            #if checkCoord not in square_arr[k].squares_taken:
-             #   print("nope")
     
 
 #set_squares = set(square_arr)
 #print(', '.join(set_squares))
-
+'''
 for i in range(len(square_arr)):
     for j in range(len(square_arr)):
         for k in range(len(square_arr[j].squares_taken)):
             #print(square_arr[j].squares_taken[k])
             if (square_arr[j].squares_taken[k] in square_arr[i].squares_taken):
                 print("found")
+'''
                 
 '''
 
