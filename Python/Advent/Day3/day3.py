@@ -36,9 +36,7 @@ test_claim_arr = ['#1 @ 520,746: 4x20',
 '#17 @ 702,795: 11x14',
 '#18 @ 695,516: 14x18',
 '#19 @ 108,169: 28x12',
-'#20 @ 13,973: 27x18']
-
-'''
+'#20 @ 13,973: 27x18',
 '#21 @ 1,580: 14x28',
 '#22 @ 319,694: 19x27',
 '#23 @ 149,828: 11x23',
@@ -119,7 +117,7 @@ test_claim_arr = ['#1 @ 520,746: 4x20',
 '#98 @ 737,891: 13x18',
 '#99 @ 720,613: 26x15',
 '#100 @ 62,620: 23x14']
-'''
+
 square_arr = [] # This array will store all square patch objects
 
 class Patch:
@@ -128,8 +126,8 @@ class Patch:
         self.squares_taken = squares_taken
         self.has_similar = has_similar
 # Take in claim data and spit out useful data (id coord, coords of patch and size of patch)
-for i in range(len(test_claim_arr)):
-    data = test_claim_arr[i].split()
+for i in range(len(claim_arr)):
+    data = claim_arr[i].split()
 
     id = data[0] # Grab patch id
     del data[1] # Remove @ symbol
@@ -180,7 +178,7 @@ for i in range(len(square_arr)):
             
 
 for l in range(len(square_arr)):
-    #print(square_arr[l].has_similar)
+    print(square_arr[l].patch_id, square_arr[l].has_similar)
     if square_arr[l].has_similar == False:
         print("\nWINNER: ", square_arr[l].patch_id)
     
