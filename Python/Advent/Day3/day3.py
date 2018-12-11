@@ -203,6 +203,7 @@ printPatchArr(test_patch_arr)
 #countCollisions(test_patch_arr)
 print(len(collision_coords))
 
+print("\nChecking coordinates for collisions...")
 for i in range(len(square_arr)):
     for j in range(len(square_arr[i].coords_taken)):
         #print(square_arr[i].coords_taken[j])#, square_arr[i].coords_taken)
