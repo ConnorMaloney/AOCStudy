@@ -1,5 +1,11 @@
 # Day 3 of Advent Calendar code problem - Part 1
 
+
+# Guess 1: FAIL. 101 too low?
+
+# NOTE: There are times where it is skipping. It is supposed to do that, but not this few amount of times
+# Nevermind, its skipping future id's that already have encountered a collission. 
+# But my implementation only accounts for half of them.
 import sys
 from pprint import pprint
 file = open("in.txt","r")
@@ -118,29 +124,30 @@ test_claim_arr = ['#1 @ 520,746: 4x20',
 '#99 @ 720,613: 26x15',
 '#100 @ 62,620: 23x14']
 
+small_test_claim_arr = ['#1 @ 1,3: 4x4',
+'#2 @ 3,1: 4x4',
+'#3 @ 5,5: 2x2']
+
 square_arr = [] # This array will store all square patch objects
 
+# Define class Patch object
 class Patch:
-    def __init__(self, patch_id, squares_taken, has_similar):
+    def __init__(self, patch_id, squares_taken, has_collision):
         self.patch_id = patch_id
         self.squares_taken = squares_taken
-        self.has_similar = has_similar
-# Take in claim data and spit out useful data (id coord, coords of patch and size of patch)
-for i in range(len(claim_arr)):
-    data = claim_arr[i].split()
+        self.has_collision = has_collision
 
+# Take in claim data and spit out useful data (id coord, coords of patch and size of patch), also populate array
+for i in range(len(small_test_claim_arr)):
+    data = small_test_claim_arr[i].split()
     id = data[0] # Grab patch id
     del data[1] # Remove @ symbol
-
     del data[0]
-
     # Grab coord and dimension data
-    
     x_coord_data = int((data[0].split(','))[0])
     y_coord_data = int((data[0].split(','))[1].rstrip(':'))
     x_length = int(data[1].split('x')[0])
     y_height = int(data[1].split('x')[1])
-
     squares_taken = [] # Define list to show all square coords taken by patch
 
     for x in range(x_coord_data, (x_coord_data + x_length)):
@@ -152,10 +159,15 @@ for i in range(len(claim_arr)):
     square_arr.append(squarePatch)
 
 
-#pprint(vars(square_arr[0])) Optional pretty print
+#for i in range(len(square_arr)):
+    #print(square_arr[i].patch_id, square_arr[i].squares_taken)
 
+# Optional pretty print: pprint(vars(square_arr[0]))
+
+# CHECK FOR COMPARISONS
 for i in range(len(square_arr)):
     checkSquare = square_arr[i]
+   # print(checkSquare.patch_id)
     for j in range(len(checkSquare.squares_taken)):
         # take this coord and check it through entire array
         checkCoord = checkSquare.squares_taken[j]
@@ -163,25 +175,47 @@ for i in range(len(square_arr)):
         for k in range(len(square_arr)):
             # only check patch id's that are different
             if checkSquare.patch_id != square_arr[k].patch_id:
-                # Don't check whats already been given as similar
-                if checkSquare.has_similar == True:
+                # Don't check whats already been given as collision
+                if 'X' in checkSquare.squares_taken:
                     break
-                elif checkCoord in square_arr[k].squares_taken:
-                    #print(checkSquare.patch_id, checkCoord, square_arr[k].patch_id, "yup") 
-                    #print(type(checkCoord))
-                    sys.stdout.write('\r>> %s %f %s' % (checkSquare.patch_id, checkCoord, square_arr[k].patch_id))
-                    sys.stdout.flush()
+                
+                #if 'X' in square_arr[k].squares_taken:
+                    #k = k + 1
+                    #print(square_arr[k].patch_id, "has X")
+                    #break
+
+                # Map out all collisions
+                #if checkCoord == 'X':
+                    #break
+                
+                # Check with flags
+                #if checkSquare.has_collision == True:
+                    #break
+                if checkCoord in square_arr[k].squares_taken:
+                    coordOfCollision1 = checkSquare.squares_taken.index(checkCoord)
+                    coordOfCollision2 = square_arr[k].squares_taken.index(checkCoord)
+                    #sys.stdout.write('\r>> %s %f %s' % (checkSquare.patch_id, checkCoord, square_arr[k].patch_id))
+                    #sys.stdout.flush()
     
                     # set patch flags
-                    checkSquare.has_similar = True
-                    square_arr[k].has_similar = True
-            
+                    checkSquare.has_collision = True
+                    square_arr[k].has_collision = True
+                    print(checkSquare.patch_id, checkCoord, square_arr[k].patch_id, square_arr[k].squares_taken[coordOfCollision2], "collision") 
+                    checkSquare.squares_taken[coordOfCollision1] = 'X'
+                    square_arr[k].squares_taken[coordOfCollision2] = 'X'
+         
+
 
 for l in range(len(square_arr)):
-    print(square_arr[l].patch_id, square_arr[l].has_similar)
-    if square_arr[l].has_similar == False:
-        print("\nWINNER: ", square_arr[l].patch_id)
+    #print(square_arr[l].patch_id, square_arr[l].has_collision)
+    #if square_arr[l].has_collision == False:
+        #print("\nNO COLLISIONS: ", square_arr[l].patch_id)
+
+    if 'X' not in square_arr[l].squares_taken:
+        print("\nNO COLLISIONS: ", square_arr[l].patch_id)
     
+#for i in range(len(square_arr)):
+    #print(square_arr[i].patch_id, square_arr[i].squares_taken)
 
 #set_squares = set(square_arr)
 #print(', '.join(set_squares))
@@ -193,8 +227,24 @@ for i in range(len(square_arr)):
             if (square_arr[j].squares_taken[k] in square_arr[i].squares_taken):
                 print("found")
 '''
-                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 '''
+
 
 
 
