@@ -124,9 +124,13 @@ test_claim_arr = ['#1 @ 520,746: 4x20',
 '#99 @ 720,613: 26x15',
 '#100 @ 62,620: 23x14']
 
-small_test_claim_arr = ['#1 @ 1,3: 4x4',
+
+# Potential bug? 4x40 reports 16 collissions (which it shouldn't), whereas 40x4 reports 12 (which it should)
+small_test_claim_arr = ['#1 @ 1,3: 4x8',
 '#2 @ 3,1: 4x4',
 '#3 @ 5,5: 2x2']
+
+test_patch_arr = [['.' for x in range(1000)] for y in range(1000)]
 
 square_arr = [] # This list will store all square patch objects
 
@@ -134,6 +138,7 @@ square_arr = [] # This list will store all square patch objects
 # With this, we can then compare all of these unique coords to see if any parition of those coords fits with an id.
 all_coords_taken = []
 unique_coords = set()
+collision_coords = [] # Define set of containing all collision coords (where X's occur)
 
 # Define class Patch object
 class Patch:
@@ -141,6 +146,26 @@ class Patch:
         self.patch_id = patch_id
         self.coords_taken = coords_taken
         self.has_collision = has_collision
+
+    
+# Pretty print patch array
+def printPatchArr(my_arr):
+    santas_strip = ''
+    for i in range(len(my_arr)):
+        patch_row = str(my_arr[i])
+        # I dont fully understand what this line is doing, but ey it removes the gross chars
+        patch_row = patch_row.translate({ord(c): None for c in '[\',] '})
+        santas_strip = santas_strip + patch_row + '\n' 
+    print(santas_strip)
+
+# Count collisions (!'s)
+def countCollisions(my_arr):
+    num_collisions = 0
+    for i in range(len(my_arr)):
+        for j in range(len(my_arr)):
+            if my_arr[i][j] == '!':
+                num_collisions = num_collisions + 1
+    print("\n" + str(num_collisions) + " COLLISIONS FOUND\n")
 
 # Take in claim data and spit out useful data (id coord, coords of patch and size of patch), also populate array
 for i in range(len(claim_arr)):
@@ -155,8 +180,16 @@ for i in range(len(claim_arr)):
     y_height = int(data[1].split('x')[1])
     coords_taken = [] # Define list to show all coords taken by patch
 
-    for x in range(x_coord_data, (x_coord_data + x_length)):
-        for y in range(y_coord_data, (y_coord_data + y_height)):
+    squarePatch = Patch(id, coords_taken, False)
+
+    for x in range(x_coord_data, x_coord_data + x_length):
+        for y in range(y_coord_data, y_coord_data + y_height):
+            if test_patch_arr[x][y] == '.':
+                test_patch_arr[x][y] = 'X'
+            elif test_patch_arr[x][y] == 'X':
+                test_patch_arr[x][y] = '!'
+                collision_coords.append(float(str(x) + '.' + str(y)))
+                
             coords = float(str(x) + '.' + str(y))
             coords_taken.append(coords)
             all_coords_taken.append(coords)
@@ -166,12 +199,30 @@ for i in range(len(claim_arr)):
     #print(vars(squarePatch))
     square_arr.append(squarePatch)
 
+printPatchArr(test_patch_arr)
+#countCollisions(test_patch_arr)
+print(len(collision_coords))
+
+for i in range(len(square_arr)):
+    for j in range(len(square_arr[i].coords_taken)):
+        #print(square_arr[i].coords_taken[j])#, square_arr[i].coords_taken)
+        sys.stdout.write('\r>> %s %f' % (square_arr[i].patch_id, square_arr[i].coords_taken[j]))
+        sys.stdout.flush()
+        if (square_arr[i].has_collision == True):
+            break
+        if (square_arr[i].coords_taken[j] in collision_coords):
+            square_arr[i].has_collision = True
+
+for i in range(len(square_arr)):
+    if square_arr[i].has_collision == False:
+        print("\nNO COLLISIONS: ", square_arr[i].patch_id)
+
 # LMAOOOO JUST FIGURED OUT THE ANSWER FOR PART 1 (aweh, nvm...but wait, shouldnt it be? It works for small_test_square_arr)
 
 # this must mean that there is something wrong with the heart of my code. The algorithm above.
-print("Coordinates plotted: ", len(all_coords_taken))
-print("Unique coordinates: ", len(unique_coords))
-print("Number of X's (collisions): ", (len(all_coords_taken)) - (len(unique_coords)))
+#print("Coordinates plotted: ", len(all_coords_taken))
+#print("Unique coordinates: ", len(unique_coords))
+#print("Number of X's (collisions): ", (len(all_coords_taken)) - (len(unique_coords)))
 
 
 #for i in range(len(square_arr)):
