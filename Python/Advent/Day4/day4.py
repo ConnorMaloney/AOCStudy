@@ -52,7 +52,15 @@ guard_arr = [] # Create empty guard array to store all guard objects, ordered by
 for i in range(len(test_sched_arr)):
     # Grab guard line
     if "Guard" in test_sched_arr[i]:
+        timesleep = 0
         print(test_sched_arr[i])
+        #print(i)\
+
+        # This grabs the minute digits of the first asleep line
+        timesleep = timesleep + int(test_sched_arr[i+1].split()[1][:-1][-2:])
+        
+
+        
 
 guard1 = Guard(5, ['[1518-11-05 00:03] Guard #99 begins shift',
 '[1518-11-05 00:45] falls asleep',
