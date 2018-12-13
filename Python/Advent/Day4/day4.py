@@ -49,12 +49,16 @@ guard_arr = [] # Create empty guard array to store all guard objects, ordered by
 # Iterate through array
 #for i in range(len(test_sched_arr)):
 
+for i in range(len(test_sched_arr)):
+    # Grab guard line
+    if "Guard" in test_sched_arr[i]:
+        print(test_sched_arr[i])
 
 guard1 = Guard(5, ['[1518-11-05 00:03] Guard #99 begins shift',
 '[1518-11-05 00:45] falls asleep',
 '[1518-11-05 00:55] wakes up'])
 
 #pprint(vars(guard1))
-print("TOTAL TIME SLEPT: " + str(guard1.time_slept()))
+#print("TOTAL TIME SLEPT: " + str(guard1.time_slept()))
 
 
