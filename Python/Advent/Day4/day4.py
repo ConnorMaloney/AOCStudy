@@ -37,36 +37,33 @@ test_sched_arr = [
 #pprint(test_sched_arr)
 
 class Guard:
-    def __init__(self, guard_id, shifts):
+    def __init__(self, guard_id, slept_minutes, time_slept):
         self.guard_id = guard_id
-        self.shifts = shifts
-
-    def time_slept(self):
-        return 5
+        self.slept_minutes = slept_minutes
+        self.time_slept = time_slept
 
 
 guard_arr = [] # Create empty guard array to store all guard objects, ordered by ID's
-# Iterate through array
-#for i in range(len(test_sched_arr)):
 
+# Iterate through array
 for i in range(len(test_sched_arr)):
     # Grab guard line
     if "Guard" in test_sched_arr[i]:
+        
+        guard_id = int(test_sched_arr[i].split()[3][1:])
+        print("Guard id: ", guard_id)
+
         timesleep = 0
-        print(test_sched_arr[i])
-        #print(i)\
+        while "Guard" not in test_sched_arr[i+1]:
 
-        # This grabs the minute digits of the first asleep line
-        timesleep = timesleep + int(test_sched_arr[i+1].split()[1][:-1][-2:])
+            # This grabs the time slept between 2 fall asleep and wake up occurences
+            timesleep = timesleep + ((int(test_sched_arr[i+2].split()[1][:-1][-2:]) - int(test_sched_arr[i+1].split()[1][:-1][-2:])))
+            i = i + 2 # increment by 2 so we grab the "falls asleep" and "wakes up"
+
+            print("Time slept: ", timesleep)
+            # Break if hitting last line
+            if i == ((len(test_sched_arr))-1):
+                break
+            
         
-
-        
-
-guard1 = Guard(5, ['[1518-11-05 00:03] Guard #99 begins shift',
-'[1518-11-05 00:45] falls asleep',
-'[1518-11-05 00:55] wakes up'])
-
-#pprint(vars(guard1))
-#print("TOTAL TIME SLEPT: " + str(guard1.time_slept()))
-
 
